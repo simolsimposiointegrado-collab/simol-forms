@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I SIMOL – Formulário de Interesse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-dark:   #3B28A0;
+      --purple-mid:    #6564CA;
+      --purple-main:   #8A57B5;
+      --purple-light:  #E1CCEA;
+      --bg:            #F7F4FC;
+      --text:          #2a1a5e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── decorative background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 20%, rgba(138,87,181,.13) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 90% 80%, rgba(101,100,202,.11) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(225,204,234,.18) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── header ── */
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 72px 24px 48px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--purple-mid);
+      border: 1.5px solid var(--purple-mid);
+      border-radius: 100px;
+      padding: 5px 18px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp .6s .1s forwards;
+    }
+
+    .event-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--purple-dark);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp .7s .2s forwards;
+    }
+
+    .event-full {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1rem, 2.4vw, 1.35rem);
+      font-weight: 400;
+      color: var(--purple-main);
+      letter-spacing: .03em;
+      max-width: 580px;
+      margin: 0 auto 36px;
+      opacity: 0;
+      animation: fadeUp .7s .35s forwards;
+    }
+
+    /* ornamental divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp .6s .5s forwards;
+    }
+    .divider span { display: block; height: 1.5px; width: 80px; background: var(--purple-light); }
+    .divider::before, .divider::after {
+      content: '✦';
+      font-size: .85rem;
+      color: var(--purple-mid);
+    }
+
+    /* ── intro card ── */
+    .intro {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto 56px;
+      padding: 0 24px;
+      opacity: 0;
+      animation: fadeUp .7s .6s forwards;
+    }
+
+    .intro-card {
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(138,87,181,.18);
+      border-radius: 20px;
+      padding: 36px 40px;
+      box-shadow: 0 8px 40px rgba(59,40,160,.07);
+    }
+
+    .intro-card p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    .intro-card strong {
+      color: var(--purple-dark);
+      font-weight: 600;
+    }
+
+    /* ── form section ── */
+    .form-section {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      opacity: 0;
+      animation: fadeUp .8s .8s forwards;
+    }
+
+    .form-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--purple-dark);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .iframe-wrap {
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(138,87,181,.2);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow:
+        0 4px 6px rgba(59,40,160,.04),
+        0 16px 48px rgba(59,40,160,.1);
+    }
+
+    .iframe-wrap iframe {
+      display: block;
+      width: 100%;
+      border: none;
+    }
+
+    /* ── footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: .82rem;
+      color: var(--purple-mid);
+      letter-spacing: .04em;
+    }
+
+    footer strong { color: var(--purple-dark); }
+
+    /* ── animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 600px) {
+      .intro-card { padding: 28px 22px; }
+      .event-name { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Formulário de Interesse</div>
+    <h1 class="event-name">I SIMOL</h1>
+    <p class="event-full">Simpósio Integrado de Biologia Celular,<br>Bioquímica, Genética e Biologia Molecular</p>
+    <div class="divider"><span></span><span></span></div>
+  </header>
+
+  <section class="intro">
+    <div class="intro-card">
+      <p>
+        Manifeste seu interesse em fazer parte da <strong>equipe organizadora do I SIMOL</strong>.
+        Este é um evento científico dedicado a reunir estudantes e pesquisadores das áreas de
+        Biologia Celular, Bioquímica, Genética e Biologia Molecular em um espaço de
+        troca, aprendizado e colaboração.
+      </p>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <p class="form-label">Preencha o formulário abaixo</p>
+    <div class="iframe-wrap">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLScU013sflHZC8PiJ2nePXESNsottOE03daPb4ujGeMSJM_C5Q/viewform?embedded=true"
+        height="900"
+        title="Formulário de Interesse – I SIMOL">
+        Carregando…
+      </iframe>
+    </div>
+  </section>
+
+  <footer>
+    <strong>I SIMOL</strong> &nbsp;·&nbsp; Simpósio Integrado de Biologia Molecular
+  </footer>
+
+</body>
+</html>
